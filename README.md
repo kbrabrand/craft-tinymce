@@ -1,6 +1,6 @@
-# CKEditor (Beta) for Craft CMS
+# TinyMCE (Beta) for Craft CMS
 
-This plugin adds a “CKEditor” field type to Craft CMS, which provides a rich text editor powered by [CKEditor 5] (Developer Preview v0.11.0).
+This plugin adds a TinyMCE field type to Craft CMS, which provides a rich text editor powered by [TinyMCE] (v4).
 
 ## Requirements
 
@@ -8,11 +8,7 @@ This plugin requires Craft CMS 3.0.0-RC15 or later.
 
 ## Installation
 
-You can install this plugin from the Plugin Store or with Composer.
-
-#### From the Plugin Store
-
-Go to the Plugin Store in your project’s Control Panel and search for “CKEditor”. Then click on the “Install” button in its modal window.
+You can install this plugin with Composer.
 
 #### With Composer
 
@@ -23,10 +19,10 @@ Open your terminal and run the following commands:
 cd /path/to/my-project.test
 
 # tell Composer to load the plugin
-composer require craftcms/ckeditor
+composer require kbrabrand/tinymce
 
 # tell Craft to install the plugin
-./craft install/plugin ckeditor
+./craft install/plugin tinymce
 ```
 
 ## Configuration
@@ -41,5 +37,5 @@ See the [HTML Purifier documentation] for a list of available config options.
 
 You can track our progress toward the 1.0 GA release from the [1.0 project](https://github.com/craftcms/ckeditor/projects/1).
 
-[CKEditor 5]: https://ckeditor5.github.io/
+[TinyMCE]: https://www.tiny.cloud/
 [HTML Purifier documentation]: http://htmlpurifier.org/live/configdoc/plain.html
