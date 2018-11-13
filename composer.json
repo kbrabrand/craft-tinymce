@@ -1,0 +1,41 @@
+{
+  "name": "kbrabrand/craft-tinymce",
+  "description": "Edit rich text content in Craft CMS using the TinyMCE editor.",
+  "version": "1.0.0-beta.1",
+  "type": "craft-plugin",
+  "keywords": [
+    "html",
+    "cms",
+    "craftcms",
+    "tinymce",
+    "yii2"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kristoffer Brabrand",
+      "homepage": "https://github.com/kbrabrand/"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/kbrabrand/craft-tinymce/issues?state=open",
+    "source": "https://github.com/kbrabrand/craft-tinymce",
+    "docs": "https://github.com/kbrabrand/craft-tinymce",
+    "rss": "https://github.com/kbrabrand/craft-tinymce/commits/master.atom"
+  },
+  "require": {
+    "craftcms/cms": "^3.0.0-RC15",
+    "tinymce/tinymce": "^4.8.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "kbrabrand\\tinymce\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "TinyMCE",
+    "handle": "tinymce",
+    "changelogUrl": "https://raw.githubusercontent.com/kbrabrand/craft-tinymce/master/CHANGELOG.md",
+    "downloadUrl": "https://github.com/kbrabrand/craft-tinymce/archive/master.zip"
+  }
+}
