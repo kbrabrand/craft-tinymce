@@ -53,7 +53,7 @@ You can creaete custom TinyMCE configs that will be available to your TinyMCE fi
 
 ### HTML Purifier Configs
 
-You can create custom HTML Purifier configs that will be available to your CKEditor fields. They should be created as JSON files in your `config/htmlpurifier/` folder.
+You can create custom HTML Purifier configs that will be available to your TinyMCE fields. They should be created as JSON files in your `config/htmlpurifier/` folder.
 
 See the [HTML Purifier documentation] for a list of available config options. 
 
