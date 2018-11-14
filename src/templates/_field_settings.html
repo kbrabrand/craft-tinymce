@@ -26,6 +26,21 @@
     }) }}
 </div>
 
+<div id="purifier-config-container">
+    {{ forms.selectField({
+        label: "TinyMCE config"|t('tinymce'),
+        instructions: "You can save custom {name} configs as {ext} files in {path}."|t('tinymce', {
+            name: 'TinyMCE',
+            ext: '`.json`',
+            path: '`config/tinymce/`'
+        }),
+        id: 'tinymceConfig',
+        name: 'tinymceConfig',
+        options: tinymceConfigOptions,
+        value: field.tinymceConfig
+    }) }}
+</div>
+
 {% if craft.app.db.isMysql %}
     {{ forms.selectField({
         label: "Column Type"|t('tinymce'),

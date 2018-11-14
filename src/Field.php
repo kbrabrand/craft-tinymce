@@ -10,6 +10,7 @@ use craft\helpers\Json;
 use craft\helpers\StringHelper;
 use craft\helpers\Template;
 use kbrabrand\tinymce\assets\field\FieldAsset;
+use kbrabrand\tinymce\assets\tinymce\TinymceAsset;;
 use yii\db\Schema;
 
 /**
@@ -40,6 +41,11 @@ class Field extends \craft\base\Field
     public $purifierConfig;
 
     /**
+     * @var string|null The TinyMCE config file to use
+     */
+    public $tinymceConfig;
+
+    /**
      * @var bool Whether the HTML should be purified on save
      */
     public $purifyHtml = true;
@@ -60,6 +66,7 @@ class Field extends \craft\base\Field
         return Craft::$app->getView()->renderTemplate('tinymce/_field_settings', [
             'field' => $this,
             'purifierConfigOptions' => $this->_getCustomConfigOptions('htmlpurifier'),
+            'tinymceConfigOptions' => $this->_getCustomConfigOptions('tinymce'),
         ]);
     }
 
@@ -124,7 +131,7 @@ class Field extends \craft\base\Field
     public function isValueEmpty($value, ElementInterface $element): bool
     {
         /** @var \Twig_Markup|null $value */
-        return $value === null || parent::isValueEmpty((string)$value);
+        return $value === null || parent::isValueEmpty((string)$value, $element);
     }
 
     /**
@@ -133,36 +140,30 @@ class Field extends \craft\base\Field
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         $view = Craft::$app->getView();
+        $view->registerAssetBundle(FieldAsset::class);
+
         $id = $view->formatInputId($this->handle);
         $nsId = $view->namespaceInputId($id);
         $encValue = htmlentities((string)$value, ENT_NOQUOTES, 'UTF-8');
+        $themeUrl = \Craft::$app->assetManager->getPublishedUrl(TinymceAsset::getSourcePath() . '/themes/modern/theme.min.js', true);
+
+        $config = $this->_getTinymceConfig();
+        $theme = array_key_exists('theme', $config) ? 'theme: "' . $config['theme'] . '",' : '';
+        $plugins = array_key_exists('plugins', $config) ? 'plugins: ' . json_encode($config['plugins']) . ',' : '';
+        $toolbar = array_key_exists('toolbar', $config) ? 'toolbar: "' . implode(' | ', $config['toolbar']) . '",' : '';
+        $menubar = array_key_exists('menubar', $config) ? ((bool) $config['menubar'] ? 'true' : 'false') : 'true';
 
         $js = <<<JS
 tinymce.init({
   selector: '#{$nsId}',
   height: 500,
-  menubar: false,
-  plugins: ['link anchor', 'code', 'table contextmenu paste help'],
-  toolbar: 'anchor | bold italic | alignleft aligncenter alignright alignjustify | removeformat | table',
+  menubar: {$menubar},
+  {$plugins}
+  {$toolbar}
+  theme_url: '{$themeUrl}'
 });
-//ClassicEditor
-//    .create(document.getElementById('{$nsId}'))
-//    .then(function(editor) {
-//        $(editor.element).closest('form').on('submit', function() {
-//            editor.updateEditorElement();
-//        });
-//    })
-//;
 JS;
-
-        $css = <<<CSS
-.ck-editor .ck-editor__editable_inline {
-    padding: 1em 2em;
-}
-CSS;
-
-        $view->registerAssetBundle(FieldAsset::class);
-        $view->registerCss($css);
+        
         $view->registerJs($js);
 
         return "<textarea id='{$id}' name='{$this->handle}'>{$encValue}</textarea>";
@@ -221,6 +222,21 @@ CSS;
             'Attr.AllowedFrameTargets' => ['_blank'],
             'HTML.AllowedComments' => ['pagebreak'],
         ];
+    }
+
+    /**
+     * Returns the HTML Purifier config used by this field.
+     *
+     * @return array
+     */
+    private function _getTinymceConfig(): array
+    {
+        if ($config = $this->_getConfig('tinymce', $this->tinymceConfig)) {
+            return $config;
+        }
+
+        // Default config
+        return [];
     }
 
     /**

@@ -19,13 +19,37 @@ Open your terminal and run the following commands:
 cd /path/to/my-project.test
 
 # tell Composer to load the plugin
-composer require kbrabrand/tinymce
+composer require kbrabrand/craft-tinymce
 
 # tell Craft to install the plugin
 ./craft install/plugin tinymce
 ```
 
 ## Configuration
+
+### TinyMCE config
+You can creaete custom TinyMCE configs that will be available to your TinyMCE fields. They should be created as JSON files in your `config/tinymce/` folder. The structure is as follows:
+
+```json
+{
+    "menubar": false,
+    "plugins": [
+        "link", 
+        "code", 
+        "table contextmenu paste help"
+    ],
+    "toolbar": [
+        "bold italic", 
+        "alignleft aligncenter alignright alignjustify", 
+        "removeformat", 
+        "table"
+    ]
+}
+```
+
+- `menubar` option can be used to turn off the menu bar
+- `plugins` is an array of plugins to enable
+- `toolbar` is an array of groups of buttons to show on the toolbar
 
 ### HTML Purifier Configs
 
