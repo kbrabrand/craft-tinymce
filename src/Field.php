@@ -148,21 +148,20 @@ class Field extends \craft\base\Field
         $themeUrl = \Craft::$app->assetManager->getPublishedUrl(TinymceAsset::getSourcePath() . '/themes/modern/theme.min.js', true);
 
         $config = $this->_getTinymceConfig();
-        $theme = array_key_exists('theme', $config) ? 'theme: "' . $config['theme'] . '",' : '';
-        $plugins = array_key_exists('plugins', $config) ? 'plugins: ' . json_encode($config['plugins']) . ',' : '';
-        $toolbar = array_key_exists('toolbar', $config) ? 'toolbar: "' . implode(' | ', $config['toolbar']) . '",' : '';
-        $menubar = array_key_exists('menubar', $config) ? ((bool) $config['menubar'] ? 'true' : 'false') : 'true';
+        $tinymceInitObject = json_encode(array_merge(
+            [
+                'autoresize_bottom_margin' => 20,
+                'autoresize_max_height' => 500,
+            ],
+            $config,
+            [
+                'selector' => "#$nsId",
+                'theme_url' => $themeUrl,
+            ]
+        ));
 
         $js = <<<JS
-tinymce.init({
-  selector: '#{$nsId}',
-  menubar: {$menubar},
-  autoresize_bottom_margin: 20,
-  autoresize_max_height: 500,
-  {$plugins}
-  {$toolbar}
-  theme_url: '{$themeUrl}'
-});
+tinymce.init({$tinymceInitObject});
 JS;
         
         $view->registerJs($js);

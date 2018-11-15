@@ -28,28 +28,20 @@ composer require kbrabrand/craft-tinymce
 ## Configuration
 
 ### TinyMCE config
-You can creaete custom TinyMCE configs that will be available to your TinyMCE fields. They should be created as JSON files in your `config/tinymce/` folder. The structure is as follows:
+You can creaete custom TinyMCE configs that will be available to your TinyMCE fields. They should be created as JSON files in your `config/tinymce/` folder. The options are the ones you find in the [TinyMCE documentation] – with two exceptions: the theme will be set to modern, and the selector to the id of the field rendered by Craft.
 
 ```json
 {
     "menubar": false,
-    "plugins": [
-        "link", 
-        "code", 
-        "table contextmenu paste help"
-    ],
-    "toolbar": [
-        "bold italic", 
-        "alignleft aligncenter alignright alignjustify", 
-        "removeformat", 
-        "table"
+    "plugins": ["autoresize", "link", "code", "table contextmenu paste help"],
+    "toolbar": "bold italic | alignleft aligncenter alignright alignjustify | removeformat | table",
+    "table_class_list": [
+        {"title": "None", "value": ""},
+        {"title": "Dog", "value": "dog"},
+        {"title": "Cat", "value": "cat"}
     ]
 }
 ```
-
-- `menubar` option can be used to turn off the menu bar
-- `plugins` is an array of plugins to enable
-- `toolbar` is an array of groups of buttons to show on the toolbar
 
 ### HTML Purifier Configs
 
@@ -57,5 +49,6 @@ You can create custom HTML Purifier configs that will be available to your TinyM
 
 See the [HTML Purifier documentation] for a list of available config options. 
 
+[TinyMCE documentation]: https://www.tiny.cloud/docs/general-configuration-guide/
 [TinyMCE]: https://www.tiny.cloud/
 [HTML Purifier documentation]: http://htmlpurifier.org/live/configdoc/plain.html
