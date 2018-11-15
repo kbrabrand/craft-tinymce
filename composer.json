@@ -1,7 +1,6 @@
 {
   "name": "kbrabrand/craft-tinymce",
   "description": "Edit rich text content in Craft CMS using the TinyMCE editor.",
-  "version": "1.0.0",
   "type": "craft-plugin",
   "keywords": [
     "html",
