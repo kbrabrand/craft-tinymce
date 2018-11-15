@@ -156,8 +156,9 @@ class Field extends \craft\base\Field
         $js = <<<JS
 tinymce.init({
   selector: '#{$nsId}',
-  height: 500,
   menubar: {$menubar},
+  autoresize_bottom_margin: 20,
+  autoresize_max_height: 500,
   {$plugins}
   {$toolbar}
   theme_url: '{$themeUrl}'
@@ -236,7 +237,9 @@ JS;
         }
 
         // Default config
-        return [];
+        return [
+            'plugins' => 'autoresize'
+        ];
     }
 
     /**
